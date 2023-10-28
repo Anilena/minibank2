@@ -4,10 +4,10 @@ namespace minibank_client_api.Models
 {
     public interface IClientRepository
     {
-        IEnumerable<Client> GetAll();
-        Client Get(Guid GUID);
+        IEnumerable<Client> Get();
+        Client GetByUserName(String username);
         Client Add(Client item);
-        void Remove(Guid GUID);
-        bool Update(Client item);
+        Boolean Remove(Guid GUID);
+        Client Update(Client item);
     }
 }

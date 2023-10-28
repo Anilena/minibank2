@@ -5,7 +5,7 @@ namespace minibank_client_api.Models
     public class ClientRepository : IClientRepository
     {
         private List<Client> clients = new List<Client>();
-        private int _nextId = 1;
+        
 
         public ClientRepository()
         {
@@ -14,46 +14,29 @@ namespace minibank_client_api.Models
            // Add(new Product { Name = "Hammer", Category = "Hardware", Price = 16.99M });
         }
 
-        public IEnumerable<Client> GetAll()
+        public IEnumerable<Client> Get()
         {
             return clients;
         }
 
-        public Client Get(Guid GUID)
+        public Client GetByUserName(String username)
         {
-            return clients.Find(p => p.GUID == GUID);
+            return new Client();
         }
 
         public Client Add(Client item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
-            item.Id = _nextId++;
-            clients.Add(item);
-            return item;
+            return new Client();
         }
 
-        public void Remove(Guid GUID)
+        public Boolean Remove(Guid GUID)
         {
-            clients.RemoveAll(p => p.GUID == GUID);
-        }
-
-        public bool Update(Client item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item");
-            }
-            int index = clients.FindIndex(p => p.GUID == item.GUID);
-            if (index == -1)
-            {
-                return false;
-            }
-            clients.RemoveAt(index);
-            clients.Add(item);
             return true;
+        }
+
+        public Client Update(Client item)
+        {
+           return new Client();
         }
     }
 }

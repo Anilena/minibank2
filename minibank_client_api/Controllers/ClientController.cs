@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+using minibank_client_api.Models;
 
 namespace minibank_client_api.Controllers
 {
@@ -7,11 +7,6 @@ namespace minibank_client_api.Controllers
     [Route("[controller]")]
     public class ClientController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
         private readonly ILogger<ClientController> _logger;
 
         public ClientController(ILogger<ClientController> logger)
@@ -19,16 +14,33 @@ namespace minibank_client_api.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet(Name = "ReadClients")]
+        [Produces("application/json")]
+        public IEnumerable<Client> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return Enumerable.Empty<Client>();
+        }
+
+        [HttpGet("{UserName}", Name = "ReadClientByUserName")]
+        [Produces("application/json")]
+        public Client GetByUserName(String username)
+        {
+            return new Client();
+        }
+
+        [HttpPut(Name = "UpdateClient")]
+        [ProducesResponseType(200)]
+        [Produces("application/json")]
+        public Client Set(Client client)
+        {
+            return new Client();
+        }
+
+        [HttpDelete("{GUID}", Name = "DeleteClient")]
+        [ProducesResponseType(200)]
+        public bool Delete(Guid guid)
+        {
+            return true;
         }
     }
 }
