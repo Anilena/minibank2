@@ -1,9 +1,13 @@
 ﻿using System;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace minibank_client_api.Models
 {
-	public class Client
+    [Table("client")]
+	public class Client: DbContext
 	{
 		public Client()
 		{
@@ -16,14 +20,22 @@ namespace minibank_client_api.Models
             UserName = String.Empty;
             Password = String.Empty;
 		}
-
+        [System.ComponentModel.DataAnnotations.Key]
+        [Column("id")]
         public int Id { get; set; }
+        [Column("guid")]
         public Guid GUID { get; set; }
+        [Column("first_name")]
         public string FirstName { get; set; }
+        [Column("second_name")]
         public string SecondName { get; set; }
+        [Column("last_name")]
         public string LastName { get; set; }
+        [Column("email")]
         public string Email { get; set; }
+        [Column("username")]
         public string UserName { get; set; }
+        [Column("password")]
         public string Password { get; set; }
     }
 }

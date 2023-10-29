@@ -1,3 +1,6 @@
+using System;
+using minibank_client_api.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,3 +26,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
