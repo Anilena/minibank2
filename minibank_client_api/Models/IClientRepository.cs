@@ -4,9 +4,9 @@ namespace minibank_client_api.Models
 {
     public interface IClientRepository
     {
-        Client? GetByUserName(String username);
-        Client? Add(Client item);
-        Client? Update(Client item);
-        Boolean Remove(Client item);
+        ClientDb? GetByUserName(String username);
+        ClientDb? Add(ClientDb item);
+        ClientDb? Update(ClientDb item);
+        Boolean Remove(ClientDb item);
     }
 }

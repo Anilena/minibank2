@@ -1,41 +1,60 @@
-﻿using System;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace minibank_client_api.Models
 {
-    [Table("client")]
-	public class Client: DbContext
-	{
-		public Client()
-		{
+    //Основной класс.               
+    public class Client
+    {
+        public Client()
+        {
             Id = 0;
             GUID = new Guid(Guid.NewGuid().ToString());
-            FirstName= String.Empty;
-            SecondName= String.Empty;
-            LastName= String.Empty;
+            FirstName = String.Empty;
+            SecondName = String.Empty;
+            LastName = String.Empty;
             Email = String.Empty;
             UserName = String.Empty;
             Password = String.Empty;
-		}
-        [System.ComponentModel.DataAnnotations.Key]
-        [Column("id")]
+        }
         public int Id { get; set; }
-        [Column("guid")]
         public Guid GUID { get; set; }
-        [Column("first_name")]
         public string FirstName { get; set; }
-        [Column("second_name")]
         public string SecondName { get; set; }
-        [Column("last_name")]
         public string LastName { get; set; }
-        [Column("email")]
         public string Email { get; set; }
-        [Column("username")]
         public string UserName { get; set; }
-        [Column("password")]
         public string Password { get; set; }
+
+        //Конвертация из БД объекта
+        public Client ConvertToObj(ClientDb? clientDb)
+        {
+            var client = new Client();
+            if (clientDb != null)
+            {
+                client.Id = clientDb.Id;
+                client.GUID = clientDb.GUID;
+                client.FirstName = clientDb.FirstName;
+                client.SecondName = clientDb.SecondName;
+                client.LastName = clientDb.LastName;
+                client.Email = clientDb.Email;
+                client.UserName = clientDb.UserName;
+                client.Password = clientDb.Password;
+            }
+            return client;
+        }
+        //Конвертация в БД объект
+        public ClientDb ConvertToDb(Client client)
+        {
+            var clientDb = new ClientDb();
+            clientDb.Id = client.Id;
+            clientDb.GUID = client.GUID;
+            clientDb.FirstName = client.FirstName;
+            clientDb.SecondName = client.SecondName;
+            clientDb.LastName = client.LastName;
+            clientDb.Email = client.Email;
+            clientDb.UserName = client.UserName;
+            clientDb.Password = client.Password;
+            return clientDb;
+        }
     }
 }

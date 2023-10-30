@@ -6,7 +6,7 @@ namespace minibank_client_api.Models
 {
     public class ClientRepositoryDbPostgreSQl : DbContext, IClientRepository
     {
-        public DbSet<Client> dbClients { get; set; }
+        public DbSet<ClientDb> dbClients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -17,8 +17,8 @@ namespace minibank_client_api.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Client>(e => e.ToTable("client"));
-            modelBuilder.Entity<Client>(entity =>
+            modelBuilder.Entity<ClientDb>(e => e.ToTable("client"));
+            modelBuilder.Entity<ClientDb>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id").HasDefaultValue();
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -34,7 +34,7 @@ namespace minibank_client_api.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public Client? GetByUserName(String username)
+        public ClientDb? GetByUserName(String username)
         {
             using (var db = new ClientRepositoryDbPostgreSQl())
             {
@@ -43,7 +43,7 @@ namespace minibank_client_api.Models
             }
             //добавить обработку исключения
         }
-        public Client? Add(Client item)
+        public ClientDb? Add(ClientDb item)
         {
             using var db = new ClientRepositoryDbPostgreSQl();
             db.dbClients.Add(item);
@@ -51,7 +51,7 @@ namespace minibank_client_api.Models
             //добавить обработку исключения
             return GetByUserName(item.UserName);
         }
-        public Client? Update(Client item)
+        public ClientDb? Update(ClientDb item)
         {
             using var db = new ClientRepositoryDbPostgreSQl();
             db.dbClients.Update(item);
@@ -59,7 +59,7 @@ namespace minibank_client_api.Models
             //добавить обработку исключения
             return GetByUserName(item.UserName);
         }
-        public Boolean Remove(Client item)
+        public Boolean Remove(ClientDb item)
         {
             using (var db = new ClientRepositoryDbPostgreSQl())
             {

@@ -14,11 +14,11 @@ namespace minibank_client_api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{UserName}", Name = "ReadClientByUserName")]
+        [HttpGet(Name = "ReadClientByUserName")]
         [Produces("application/json")]
         public Client GetByUserName(String username)
         {
-            return new ClientRepositoryDbPostgreSQl().GetByUserName(username)?? new Client();
+            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().GetByUserName(username));
         }
 
         [HttpPut(Name = "UpdateOrCreateClient")]
@@ -27,16 +27,17 @@ namespace minibank_client_api.Controllers
         public Client Set(Client client)
         {
             if (client.Id == 0) {
-                return new ClientRepositoryDbPostgreSQl().Add(client) ?? new Client();
+                client.GUID = new Guid();
+                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().Add(new Client().ConvertToDb(client))) ?? new Client();
             }
-            return new ClientRepositoryDbPostgreSQl().Update(client) ?? new Client();
+            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().Update(new Client().ConvertToDb(client))) ?? new Client();
         }
 
-        [HttpDelete("{GUID}", Name = "DeleteClient")]
+        [HttpDelete(Name = "DeleteClient")]
         [ProducesResponseType(200)]
         public bool Delete(Client client)
         {
-            return new ClientRepositoryDbPostgreSQl().Remove(client);
+            return new ClientRepositoryDbPostgreSQl().Remove(new Client().ConvertToDb(client));
         }
     }
 }
