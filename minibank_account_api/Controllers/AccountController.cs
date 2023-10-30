@@ -14,31 +14,31 @@ namespace minibank_account_api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{GUID}", Name = "ReadAccounts")]
+        [HttpGet("by-user/{userId}")]
         [Produces("application/json")]
-        public IEnumerable<Account> GetByUserGuid()
+        public IEnumerable<Account> GetByUserGuid([FromRoute] Guid userId)
         {
-            return Enumerable.Empty<Account>();
+            return ArraySegment<Account>.Empty;
         }
 
-        [HttpGet("{no}", Name = "ReadAccountByNo")]
+        [HttpGet("{no}")]
         [Produces("application/json")]
-        public Account GetByNo(String no)
-        {
-            return new Account();
-        }
-
-        [HttpPut(Name = "UpdateAccount")]
-        [ProducesResponseType(200)]
-        [Produces("application/json")]
-        public Account Set(Account client)
+        public Account GetByNo([FromRoute] string no)
         {
             return new Account();
         }
 
-        [HttpDelete("{no}", Name = "DeleteAccount")]
+        [HttpPut]
         [ProducesResponseType(200)]
-        public bool Delete(string no)
+        [Produces("application/json")]
+        public Account Set([FromBody] Account client)
+        {
+            return new Account();
+        }
+
+        [HttpDelete("{no}")]
+        [ProducesResponseType(200)]
+        public bool Delete([FromRoute] string no)
         {
             return true;
         }
