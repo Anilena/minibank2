@@ -21,26 +21,30 @@ namespace minibank_account_api.Controllers
             return Enumerable.Empty<Account>();
         }
 
-        [HttpGet("{no}", Name = "ReadAccountByNo")]
+        [HttpGet(Name = "ReadAccountByNo")]
         [Produces("application/json")]
         public Account GetByNo(String no)
         {
-            return new Account();
+            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().GetByNo(no));
         }
 
         [HttpPut(Name = "UpdateAccount")]
         [ProducesResponseType(200)]
         [Produces("application/json")]
-        public Account Set(Account client)
+        public Account Set(Account account)
         {
-            return new Account();
+            if (account.Id == 0)
+            {
+                return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().Add(new Account().ConvertToDb(account))) ?? new Account();
+            }
+            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().Update(new Account().ConvertToDb(account))) ?? new Account();
         }
 
-        [HttpDelete("{no}", Name = "DeleteAccount")]
+        [HttpDelete(Name = "DeleteAccount")]
         [ProducesResponseType(200)]
-        public bool Delete(string no)
+        public bool Delete(Account account)
         {
-            return true;
+            return new AccountRepositoryDbPostgreSQL().Remove(new Account().ConvertToDb(account));
         }
     }
 }
