@@ -1,0 +1,25 @@
+version: "3.2"
+
+services:
+  account_api:
+    container_name: 'account_api'
+    build:
+      context: ../minibank_account_api
+      dockerfile: ./Dockerfile
+    networks:
+      - minibank
+    ports:
+      - '9081:80'
+        
+  client_api:
+    container_name: 'client_api'
+    build:
+      context: ../minibank_client_api
+      dockerfile: ./Dockerfile
+    networks:
+      - minibank
+    ports:
+      - '9082:80'
+  
+networks:
+  minibank:
