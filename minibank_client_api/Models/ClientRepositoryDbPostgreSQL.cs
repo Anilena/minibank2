@@ -66,6 +66,7 @@ namespace minibank_client_api.Models
                 db.SaveChanges();
             }
             //добавить обработку исключения
+            //изменить ответ - а то всегда true
             return true;
         }
     }

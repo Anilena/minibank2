@@ -30,12 +30,20 @@ namespace minibank_account_api.Models
             base.OnModelCreating(modelBuilder);
         }
         public IEnumerable<AccountDb> GetByUser(Guid clientguid)
-        {
+        {   
+            var acc = new List<AccountDb>();
             using (var db = new AccountRepositoryDbPostgreSQL())
             {
-                return db.dbAccounts
+                var accDB = db.dbAccounts
                 .Where(item => item.ClientGuid == clientguid);
+
+                foreach (var item1 in accDB)
+                {
+                    acc.Add(item1);
+                    //return new ArraySegment<AccountDb>();
+                }
             }
+            return acc;
         }
         public AccountDb? GetByNo(string no)
         {
@@ -70,6 +78,7 @@ namespace minibank_account_api.Models
                 db.SaveChanges();
             }
             //добавить обработку исключения
+            //изменить ответ - а то всегда true
             return true;
         }
     }
