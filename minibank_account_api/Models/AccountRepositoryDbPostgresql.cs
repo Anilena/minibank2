@@ -21,7 +21,7 @@ namespace minibank_account_api.Models
             modelBuilder.Entity<AccountDb>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("id").HasDefaultValue();
-                entity.Property(e => e.No).HasColumnName("no");
+                entity.Property(e => e.No).HasColumnName("no").HasDefaultValue();
                 entity.Property(e => e.ClientGuid).HasColumnName("client_guid");
                 entity.Property(e => e.Balance).HasColumnName("balance");
                 entity.Property(e => e.Currency).HasColumnName("currency").HasDefaultValue();

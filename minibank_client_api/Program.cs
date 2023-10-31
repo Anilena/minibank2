@@ -1,4 +1,5 @@
 using System;
+using minibank_client_api;
 using minibank_client_api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
