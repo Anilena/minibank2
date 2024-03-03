@@ -6,12 +6,17 @@ namespace minibank_client_api.Models
 {
     public class ClientRepositoryDbPostgreSQl : DbContext, IClientRepository
     {
+        private readonly string? _connectionString;
         public DbSet<ClientDb> dbClients { get; set; }
+
+        public ClientRepositoryDbPostgreSQl(string? connectionString)
+        {
+            _connectionString = connectionString;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(connectionString:
-               "Server=rc1b-5e7n4vksf85yfbsb.mdb.yandexcloud.net;Port=6432;User Id=mini;Password=minibank;Database=minibank;");
+            optionsBuilder.UseNpgsql(connectionString:_connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -35,7 +40,7 @@ namespace minibank_client_api.Models
 
         public ClientDb? GetByUserName(String username)
         {
-            using (var db = new ClientRepositoryDbPostgreSQl())
+            using (var db = new ClientRepositoryDbPostgreSQl(_connectionString))
             {
                 return db.dbClients
                .FirstOrDefault(item => item.UserName == username);
@@ -44,7 +49,7 @@ namespace minibank_client_api.Models
         }
         public ClientDb? Add(ClientDb item)
         {
-            using var db = new ClientRepositoryDbPostgreSQl();
+            using var db = new ClientRepositoryDbPostgreSQl(_connectionString);
             db.dbClients.Add(item);
             db.SaveChanges();
             //добавить обработку исключения
@@ -52,7 +57,7 @@ namespace minibank_client_api.Models
         }
         public ClientDb? Update(ClientDb item)
         {
-            using var db = new ClientRepositoryDbPostgreSQl();
+            using var db = new ClientRepositoryDbPostgreSQl(_connectionString);
             db.dbClients.Update(item);
             db.SaveChanges();
             //добавить обработку исключения
@@ -60,7 +65,7 @@ namespace minibank_client_api.Models
         }
         public Boolean Remove(ClientDb item)
         {
-            using (var db = new ClientRepositoryDbPostgreSQl())
+            using (var db = new ClientRepositoryDbPostgreSQl(_connectionString))
             {
                 db.dbClients.Remove(item);
                 db.SaveChanges();

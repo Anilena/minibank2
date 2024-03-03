@@ -9,10 +9,14 @@ namespace minibank_account_api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly ILogger<AccountController> _logger;
+        private IConfiguration _config;
+        private string? _connectionString;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, IConfiguration config)
         {
             _logger = logger;
+            _config = config;
+            _connectionString = _config.GetConnectionString("SQLConnection");
         }
 
        
@@ -21,7 +25,7 @@ namespace minibank_account_api.Controllers
         public IEnumerable<Account> GetByUserGuid([FromRoute] Guid userId)
         {
             List<Account> accounts = new List<Account>();
-            IEnumerable<AccountDb> accountsDb = new AccountRepositoryDbPostgreSQL().GetByUser(userId);
+            IEnumerable<AccountDb> accountsDb = new AccountRepositoryDbPostgreSQL(_connectionString).GetByUser(userId);
 
             foreach (var item in accountsDb)
             {
@@ -34,7 +38,7 @@ namespace minibank_account_api.Controllers
         [Produces("application/json")]
         public Account GetByNo([FromRoute] string no)
         {
-            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().GetByNo(no));
+            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL(_connectionString).GetByNo(no));
         }
 
         [HttpPut]
@@ -45,16 +49,16 @@ namespace minibank_account_api.Controllers
             if (account.No == "")
             {
                 account.No = AccountController.GetAccNo(account.Currency);
-                return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().Add(new Account().ConvertToDb(account))) ?? new Account();
+                return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL(_connectionString).Add(new Account().ConvertToDb(account))) ?? new Account();
             }
-            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().Update(new Account().ConvertToDb(account))) ?? new Account();
+            return new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL(_connectionString).Update(new Account().ConvertToDb(account))) ?? new Account();
         }
 
         [HttpDelete("{no}")]
         [ProducesResponseType(200)]
         public bool Delete([FromRoute] string no)
         {
-            return new AccountRepositoryDbPostgreSQL().Remove(new Account().ConvertToDb(new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL().GetByNo(no))));
+            return new AccountRepositoryDbPostgreSQL(_connectionString).Remove(new Account().ConvertToDb(new Account().ConvertToObj(new AccountRepositoryDbPostgreSQL(_connectionString).GetByNo(no))));
         }
 
         private static String GetAccNo(String currency)

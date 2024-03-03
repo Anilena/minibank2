@@ -6,12 +6,19 @@ namespace minibank_account_api.Models
 {
     public class AccountRepositoryDbPostgreSQL : DbContext, IAccountRepository
     {
+        private readonly string? _connectionString;
+
         public DbSet<AccountDb> dbAccounts { get; set; }
+
+        public AccountRepositoryDbPostgreSQL(string? connectionString)
+        {
+            _connectionString = connectionString;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(connectionString:
-               "Server=rc1b-5e7n4vksf85yfbsb.mdb.yandexcloud.net;Port=6432;User Id=mini;Password=minibank;Database=minibank;");
+            
+            optionsBuilder.UseNpgsql(connectionString:_connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -32,7 +39,7 @@ namespace minibank_account_api.Models
         public IEnumerable<AccountDb> GetByUser(Guid clientguid)
         {   
             var acc = new List<AccountDb>();
-            using (var db = new AccountRepositoryDbPostgreSQL())
+            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
             {
                 var accDB = db.dbAccounts
                 .Where(item => item.ClientGuid == clientguid);
@@ -47,7 +54,7 @@ namespace minibank_account_api.Models
         }
         public AccountDb? GetByNo(string no)
         {
-            using (var db = new AccountRepositoryDbPostgreSQL())
+            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
             {
                 return db.dbAccounts
                .FirstOrDefault(item => item.No == no);
@@ -56,7 +63,7 @@ namespace minibank_account_api.Models
 
         public AccountDb? Add(AccountDb item)
         {
-            using var db = new AccountRepositoryDbPostgreSQL();
+            using var db = new AccountRepositoryDbPostgreSQL(_connectionString);
             db.dbAccounts.Add(item);
             db.SaveChanges();
             //добавить обработку исключения
@@ -64,7 +71,7 @@ namespace minibank_account_api.Models
         }
         public AccountDb? Update(AccountDb item)
         {
-            using var db = new AccountRepositoryDbPostgreSQL();
+            using var db = new AccountRepositoryDbPostgreSQL(_connectionString);
             db.dbAccounts.Update(item);
             db.SaveChanges();
             //добавить обработку исключения
@@ -72,7 +79,7 @@ namespace minibank_account_api.Models
         }
         public bool Remove(AccountDb item)
         {
-            using (var db = new AccountRepositoryDbPostgreSQL())
+            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
             {
                 db.dbAccounts.Remove(item);
                 db.SaveChanges();

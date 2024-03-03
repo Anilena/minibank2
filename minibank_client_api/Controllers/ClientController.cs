@@ -8,17 +8,21 @@ namespace minibank_client_api.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ILogger<ClientController> _logger;
+        private IConfiguration _config;
+        private string? _connectionString;
 
-        public ClientController(ILogger<ClientController> logger)
+        public ClientController(ILogger<ClientController> logger, IConfiguration config)
         {
             _logger = logger;
+            _config = config;
+            _connectionString = _config.GetConnectionString("SQLConnection");
         }
 
         [HttpGet("{username}")]
         [Produces("application/json")]
         public Client GetByUserName([FromRoute]String username)
         {
-            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().GetByUserName(username));
+            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).GetByUserName(username));
         }
 
         [HttpPut]
@@ -28,16 +32,16 @@ namespace minibank_client_api.Controllers
         {
             if (client.Id == 0) {
                 client.GUID = new Guid();
-                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().Add(new Client().ConvertToDb(client))) ?? new Client();
+                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).Add(new Client().ConvertToDb(client))) ?? new Client();
             }
-            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().Update(new Client().ConvertToDb(client))) ?? new Client();
+            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).Update(new Client().ConvertToDb(client))) ?? new Client();
         }
 
         [HttpDelete("{username}")]
         [ProducesResponseType(200)]
         public bool Delete([FromRoute] string username)
         {
-            return new ClientRepositoryDbPostgreSQl().Remove(new Client().ConvertToDb(new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl().GetByUserName(username))));
+            return new ClientRepositoryDbPostgreSQl(_connectionString).Remove(new Client().ConvertToDb(new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).GetByUserName(username))));
         }
     }
 }
