@@ -16,10 +16,37 @@ services:
     build:
       context: ../minibank_client_api
       dockerfile: ./Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:9082;https://+:44390;
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/App/ssl/certs/cert.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/App/ssl/certs/cert.key
+    volumes:
+      - c:\temp\logs:/App/logs
+      - ./cert.crt:/App/ssl/certs/cert.crt
+      - ./cert.key:/App/ssl/certs/cert.key
+      - ./root.crt:/App/ssl/root.crt
+      - ./appsetings.json:/App/appsetings.json
     networks:
       - minibank
     ports:
       - '9082:80'
+      - '44390:44390'
+    #logging:
+    #  driver: journald
   
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./minibank.conf:/etc/nginx/conf.d/minibank.conf
+    links:
+     - client_api
+     - account_api
+    networks:
+      - minibank
+    ports:
+      - '80:80'
+      - '9083:9083'
+      - '9084:9084'
 networks:
   minibank:

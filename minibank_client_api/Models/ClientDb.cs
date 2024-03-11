@@ -1,7 +1,4 @@
-﻿using System;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace minibank_client_api.Models
@@ -19,6 +16,8 @@ namespace minibank_client_api.Models
             Email = String.Empty;
             UserName = String.Empty;
             Password = String.Empty;
+            Token = String.Empty;
+            CreateDate = DateTime.Now;
 		}
         [System.ComponentModel.DataAnnotations.Key]
         [Column("id")]
@@ -37,5 +36,9 @@ namespace minibank_client_api.Models
         public string UserName { get; set; }
         [Column("password")]
         public string Password { get; set; }
+        [Column("token")]
+        public string Token { get; set; }
+        [Column("create_date")]
+        public DateTime? CreateDate { get; set; }
     }
 }

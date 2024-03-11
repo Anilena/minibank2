@@ -1,22 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Runtime.ConstrainedExecution;
+using minibank_client_api.Controllers;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace minibank_client_api.Models
 {
     public class ClientRepositoryDbPostgreSQl : DbContext, IClientRepository
     {
+        private readonly ILogger<ClientController> _logger;
+
         private readonly string? _connectionString;
         public DbSet<ClientDb> dbClients { get; set; }
 
-        public ClientRepositoryDbPostgreSQl(string? connectionString)
+        public ClientRepositoryDbPostgreSQl(string? connectionString, ILogger<ClientController> logger)
         {
             _connectionString = connectionString;
+            _logger = logger;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(connectionString:_connectionString);
+            //optionsBuilder.UseNpgsql(_connectionString, builder =>
+            //{
+            //    builder.RemoteCertificateValidationCallback((s, c, ch, sslPolicyErrors) =>
+            //    {
+            //        if (sslPolicyErrors == SslPolicyErrors.None)
+            //        {
+            //            return true;
+            //        }
+            //        _logger.LogError($@"Certificate error: {sslPolicyErrors}");
+            //        return false;
+            //    });
+            //    //builder.ProvideClientCertificatesCallback (clientCerts =>
+            //    //{
+            //    //    var clientCertPath = "C:\\Users\\anile\\.postgresql\\root.crt";
+            //    //    var cert = new X509Certificate2(clientCertPath);
+            //    //    clientCerts.Add(cert);
+            //    //});
+            //});
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -33,6 +55,8 @@ namespace minibank_client_api.Models
                 entity.Property(e => e.Email).HasColumnName("email");
                 entity.Property(e => e.UserName).HasColumnName("username");
                 entity.Property(e => e.Password).HasColumnName("password");
+                entity.Property(e => e.Token).HasColumnName("token");
+                entity.Property(e => e.CreateDate).HasColumnName("create_date");
             });
             modelBuilder.HasDefaultSchema("sh_clients");
             base.OnModelCreating(modelBuilder);
@@ -40,39 +64,69 @@ namespace minibank_client_api.Models
 
         public ClientDb? GetByUserName(String username)
         {
-            using (var db = new ClientRepositoryDbPostgreSQl(_connectionString))
+#if DEBUG
+            _logger.LogInformation("GetByUserName");
+#endif
+            try
             {
-                return db.dbClients
+                using (var db = new ClientRepositoryDbPostgreSQl(_connectionString, _logger))
+                {
+                  
+                    return db.dbClients
                .FirstOrDefault(item => item.UserName == username);
+                }
             }
-            //добавить обработку исключения
+            catch (Exception e) { _logger.LogError("Error.GetByUserName" + e.Message); }
+
+            return null;
         }
+        
         public ClientDb? Add(ClientDb item)
         {
-            using var db = new ClientRepositoryDbPostgreSQl(_connectionString);
-            db.dbClients.Add(item);
-            db.SaveChanges();
-            //добавить обработку исключения
+#if DEBUG
+            _logger.LogInformation("Add");
+#endif
+            try
+            {
+                using var db = new ClientRepositoryDbPostgreSQl(_connectionString, _logger);
+                db.dbClients.Add(item);
+                db.SaveChanges();
+            }
+            catch (Exception e) { _logger.LogDebug("Error.Add" + e.Message); }
+            
             return GetByUserName(item.UserName);
         }
         public ClientDb? Update(ClientDb item)
         {
-            using var db = new ClientRepositoryDbPostgreSQl(_connectionString);
-            db.dbClients.Update(item);
-            db.SaveChanges();
-            //добавить обработку исключения
+#if DEBUG
+            _logger.LogInformation("Update");
+#endif
+            try
+            {
+                using var db = new ClientRepositoryDbPostgreSQl(_connectionString, _logger);
+                db.dbClients.Update(item);
+                db.SaveChanges();
+            }
+            catch (Exception e) { _logger.LogDebug("Error.Update" + e.Message); }
+            
             return GetByUserName(item.UserName);
         }
         public Boolean Remove(ClientDb item)
         {
-            using (var db = new ClientRepositoryDbPostgreSQl(_connectionString))
+#if DEBUG
+            _logger.LogInformation("Remove");
+#endif
+            try
             {
-                db.dbClients.Remove(item);
-                db.SaveChanges();
+                using (var db = new ClientRepositoryDbPostgreSQl(_connectionString, _logger))
+                {
+                    db.dbClients.Remove(item);
+                    db.SaveChanges();
+                }
             }
-            //добавить обработку исключения
-            //изменить ответ - а то всегда true
-            return true;
+            catch (Exception e) { _logger.LogDebug("Error.Remove" + e.Message); }
+
+            return false;
         }
     }
 }

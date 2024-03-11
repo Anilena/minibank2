@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace minibank_client_api.Models
 {
@@ -15,6 +19,7 @@ namespace minibank_client_api.Models
             Email = String.Empty;
             UserName = String.Empty;
             Password = String.Empty;
+            Token = String.Empty;   
         }
         public int Id { get; set; }
         public Guid GUID { get; set; }
@@ -24,6 +29,8 @@ namespace minibank_client_api.Models
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Token { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         //Конвертация из БД объекта
         public Client ConvertToObj(ClientDb? clientDb)
@@ -39,6 +46,9 @@ namespace minibank_client_api.Models
                 client.Email = clientDb.Email;
                 client.UserName = clientDb.UserName;
                 client.Password = clientDb.Password;
+                client.Token = clientDb.Token;
+                client.CreateDate = clientDb.CreateDate;
+
             }
             return client;
         }
@@ -54,7 +64,26 @@ namespace minibank_client_api.Models
             clientDb.Email = client.Email;
             clientDb.UserName = client.UserName;
             clientDb.Password = client.Password;
+            clientDb.Token = client.Token;
+            clientDb.CreateDate = client.CreateDate;
+
             return clientDb;
         }
+
+        ////генерим токен
+        //private string generateJwtToken(Client client)
+        //{
+        //    //срок 7 дней
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new[] { new Claim("id", client.Id.ToString()) }),
+        //        Expires = DateTime.UtcNow.AddDays(7),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
     }
 }

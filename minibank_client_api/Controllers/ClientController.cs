@@ -22,7 +22,17 @@ namespace minibank_client_api.Controllers
         [Produces("application/json")]
         public Client GetByUserName([FromRoute]String username)
         {
-            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).GetByUserName(username));
+#if DEBUG
+            _logger.LogInformation("GetByUserName");
+            _logger.LogInformation(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _config.GetSection("Logging").GetSection("File").GetSection("Options").GetSection("FolderPath").Value ?? ""));
+#endif
+            try
+            {
+                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).GetByUserName(username));
+            }
+            catch (Exception e) { _logger.LogError("GetByUserName" + e.Message); }
+
+            return new Client();
         }
 
         [HttpPut]
@@ -30,18 +40,39 @@ namespace minibank_client_api.Controllers
         [Produces("application/json")]
         public Client Set([FromBody]Client client)
         {
+#if DEBUG
+            _logger.LogInformation("Set");
+#endif
             if (client.Id == 0) {
-                client.GUID = new Guid();
-                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).Add(new Client().ConvertToDb(client))) ?? new Client();
+                try {
+                    client.GUID = new Guid();
+                    return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Add(new Client().ConvertToDb(client))) ?? new Client();
+                }
+                catch (Exception e) { _logger.LogDebug("Set.Id=0"+e.Message); }
             }
-            return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).Update(new Client().ConvertToDb(client))) ?? new Client();
+            try
+            {
+                return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Update(new Client().ConvertToDb(client))) ?? new Client();
+            }
+            catch (Exception e) { _logger.LogDebug("Set.Id=" + client.Id.ToString() + e.Message); }
+
+            return new Client();
         }
 
         [HttpDelete("{username}")]
         [ProducesResponseType(200)]
         public bool Delete([FromRoute] string username)
         {
-            return new ClientRepositoryDbPostgreSQl(_connectionString).Remove(new Client().ConvertToDb(new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString).GetByUserName(username))));
+#if DEBUG
+            _logger.LogInformation("Delete");
+#endif
+            try
+            {
+                return new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Remove(new Client().ConvertToDb(new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).GetByUserName(username))));
+            }
+            catch (Exception e) { _logger.LogDebug("Delete"+e.Message); }
+
+            return false;
         }
     }
 }
