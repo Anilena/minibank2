@@ -48,13 +48,13 @@ namespace minibank_client_api.Controllers
                     client.GUID = new Guid();
                     return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Add(new Client().ConvertToDb(client))) ?? new Client();
                 }
-                catch (Exception e) { _logger.LogDebug("Set.Id=0"+e.Message); }
+                catch (Exception e) { _logger.LogError("Set.Id=0"+e.Message); }
             }
             try
             {
                 return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Update(new Client().ConvertToDb(client))) ?? new Client();
             }
-            catch (Exception e) { _logger.LogDebug("Set.Id=" + client.Id.ToString() + e.Message); }
+            catch (Exception e) { _logger.LogError("Set.Id=" + client.Id.ToString() + e.Message); }
 
             return new Client();
         }
@@ -70,7 +70,7 @@ namespace minibank_client_api.Controllers
             {
                 return new ClientRepositoryDbPostgreSQl(_connectionString, _logger).Remove(new Client().ConvertToDb(new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).GetByUserName(username))));
             }
-            catch (Exception e) { _logger.LogDebug("Delete"+e.Message); }
+            catch (Exception e) { _logger.LogError("Delete"+e.Message); }
 
             return false;
         }

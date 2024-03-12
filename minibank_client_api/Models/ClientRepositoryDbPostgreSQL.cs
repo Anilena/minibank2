@@ -21,24 +21,6 @@ namespace minibank_client_api.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(connectionString:_connectionString);
-            //optionsBuilder.UseNpgsql(_connectionString, builder =>
-            //{
-            //    builder.RemoteCertificateValidationCallback((s, c, ch, sslPolicyErrors) =>
-            //    {
-            //        if (sslPolicyErrors == SslPolicyErrors.None)
-            //        {
-            //            return true;
-            //        }
-            //        _logger.LogError($@"Certificate error: {sslPolicyErrors}");
-            //        return false;
-            //    });
-            //    //builder.ProvideClientCertificatesCallback (clientCerts =>
-            //    //{
-            //    //    var clientCertPath = "C:\\Users\\anile\\.postgresql\\root.crt";
-            //    //    var cert = new X509Certificate2(clientCertPath);
-            //    //    clientCerts.Add(cert);
-            //    //});
-            //});
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -92,7 +74,7 @@ namespace minibank_client_api.Models
                 db.dbClients.Add(item);
                 db.SaveChanges();
             }
-            catch (Exception e) { _logger.LogDebug("Error.Add" + e.Message); }
+            catch (Exception e) { _logger.LogError("Error.Add" + e.Message); }
             
             return GetByUserName(item.UserName);
         }
@@ -107,7 +89,7 @@ namespace minibank_client_api.Models
                 db.dbClients.Update(item);
                 db.SaveChanges();
             }
-            catch (Exception e) { _logger.LogDebug("Error.Update" + e.Message); }
+            catch (Exception e) { _logger.LogError("Error.Update" + e.Message); }
             
             return GetByUserName(item.UserName);
         }
@@ -124,7 +106,7 @@ namespace minibank_client_api.Models
                     db.SaveChanges();
                 }
             }
-            catch (Exception e) { _logger.LogDebug("Error.Remove" + e.Message); }
+            catch (Exception e) { _logger.LogError("Error.Remove" + e.Message); }
 
             return false;
         }
