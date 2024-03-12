@@ -13,6 +13,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "minibank_web", "minibank_we
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "minibank_web.Tests", "minibank_web.Tests\minibank_web.Tests.csproj", "{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AEC858E8-ED66-4326-B5EB-AF84A2BB4BBF}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\appsettings.json = deploy\appsettings.json
+		deploy\cert.crt = deploy\cert.crt
+		deploy\cert.key = deploy\cert.key
+		deploy\cert.pfx = deploy\cert.pfx
+		deploy\docker-compose.yml = deploy\docker-compose.yml
+		deploy\docker-compose_dev_yml = deploy\docker-compose_dev_yml
+		deploy\minibank.conf = deploy\minibank.conf
+		deploy\minibank.crt = deploy\minibank.crt
+		deploy\minibank.key = deploy\minibank.key
+		deploy\nginx.conf = deploy\nginx.conf
+		deploy\Readme.md = deploy\Readme.md
+		deploy\root.crt = deploy\root.crt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

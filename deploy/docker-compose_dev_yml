@@ -12,12 +12,12 @@ services:
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/App/ssl/certs/cert.crt
      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/App/ssl/certs/cert.key
     volumes:
-      - ./logs/account/:/App/logs
-      - ./minibank.crt:/App/ssl/certs/cert.crt
-      - ./minibank.key:/App/ssl/certs/cert.key
-      #- C:\temp\logs\account:/App/logs
-      #- ./cert.crt:/App/ssl/certs/cert.crt
-      #- ./cert.key:/App/ssl/certs/cert.key
+      #- ./logs:/App/logs
+      #- ./minibank.crt:/App/ssl/certs/cert.crt
+      #- ./minibank.key:/App/ssl/certs/cert.key
+      - C:\temp\logs\account:/App/logs
+      - ./cert.crt:/App/ssl/certs/cert.crt
+      - ./cert.key:/App/ssl/certs/cert.key
       - ./root.crt:/App/ssl/root.crt
       - ./appsettings.json:/App/appsettings.json
     networks:
@@ -37,12 +37,12 @@ services:
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/App/ssl/certs/cert.crt
      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/App/ssl/certs/cert.key
     volumes:
-      - ./logs/client/:/App/logs
-      - ./minibank.crt:/App/ssl/certs/cert.crt
-      - ./minibank.key:/App/ssl/certs/cert.key
-      #- C:\temp\logs\client:/App/logs
-      #- ./cert.crt:/App/ssl/certs/cert.crt
-      #- ./cert.key:/App/ssl/certs/cert.key
+      #- ./logs:/App/logs
+      #- ./minibank.crt:/App/ssl/certs/cert.crt
+      #- ./minibank.key:/App/ssl/certs/cert.key
+      - C:\temp\logs\client:/App/logs
+      - ./cert.crt:/App/ssl/certs/cert.crt
+      - ./cert.key:/App/ssl/certs/cert.key
       - ./root.crt:/App/ssl/root.crt
       - ./appsettings.json:/App/appsettings.json
     networks:
