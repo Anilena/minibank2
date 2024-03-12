@@ -22,6 +22,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+
+
 app.UseHsts();
 
 app.UseAuthorization();
