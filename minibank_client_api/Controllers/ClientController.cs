@@ -20,25 +20,25 @@ namespace minibank_client_api.Controllers
 
         [HttpGet("{username}")]
         [Produces("application/json")]
-        public Client GetByUserName([FromRoute]String username)
+        public Client? GetByUserName([FromRoute]String username)
         {
 #if DEBUG
             _logger.LogInformation("GetByUserName");
-            _logger.LogInformation(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _config.GetSection("Logging").GetSection("File").GetSection("Options").GetSection("FolderPath").Value ?? ""));
 #endif
             try
             {
+                //нужно изменить, что бы в этой ветке возвращался null, если ошибка глубже.
                 return new Client().ConvertToObj(new ClientRepositoryDbPostgreSQl(_connectionString, _logger).GetByUserName(username));
             }
             catch (Exception e) { _logger.LogError("GetByUserName" + e.Message); }
 
-            return new Client();
+            return null;
         }
 
         [HttpPut]
         [ProducesResponseType(200)]
         [Produces("application/json")]
-        public Client Set([FromBody]Client client)
+        public Client? Set([FromBody]Client client)
         {
 #if DEBUG
             _logger.LogInformation("Set");
@@ -56,7 +56,7 @@ namespace minibank_client_api.Controllers
             }
             catch (Exception e) { _logger.LogError("Set.Id=" + client.Id.ToString() + e.Message); }
 
-            return new Client();
+            return null;
         }
 
         [HttpDelete("{username}")]

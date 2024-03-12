@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Runtime.ConstrainedExecution;
+using minibank_account_api.Controllers;
 
 namespace minibank_account_api.Models
 {
@@ -8,17 +7,19 @@ namespace minibank_account_api.Models
     {
         private readonly string? _connectionString;
 
+        private readonly ILogger<AccountController> _logger;
         public DbSet<AccountDb> dbAccounts { get; set; }
 
-        public AccountRepositoryDbPostgreSQL(string? connectionString)
+        public AccountRepositoryDbPostgreSQL(string? connectionString, ILogger<AccountController> logger)
         {
             _connectionString = connectionString;
+            _logger = logger;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
-            optionsBuilder.UseNpgsql(connectionString:_connectionString);
+
+            optionsBuilder.UseNpgsql(connectionString: _connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -37,56 +38,94 @@ namespace minibank_account_api.Models
             base.OnModelCreating(modelBuilder);
         }
         public IEnumerable<AccountDb> GetByUser(Guid clientguid)
-        {   
+        {
             var acc = new List<AccountDb>();
-            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
+#if DEBUG
+            _logger.LogInformation("GetAccountsByUser");
+#endif
+            try
             {
-                var accDB = db.dbAccounts
-                .Where(item => item.ClientGuid == clientguid);
-
-                foreach (var item1 in accDB)
+                using (var db = new AccountRepositoryDbPostgreSQL(_connectionString, _logger))
                 {
-                    acc.Add(item1);
-                    //return new ArraySegment<AccountDb>();
+                    var accDB = db.dbAccounts
+                    .Where(item => item.ClientGuid == clientguid);
+
+                    foreach (var item1 in accDB)
+                    {
+                        acc.Add(item1);
+                    }
                 }
             }
+            catch (Exception e) { _logger.LogError("Error.GetAccountsByUser" + e.Message); }
+
             return acc;
         }
         public AccountDb? GetByNo(string no)
         {
-            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
+#if DEBUG
+            _logger.LogInformation("GetAccountByNo");
+#endif
+            try
             {
-                return db.dbAccounts
-               .FirstOrDefault(item => item.No == no);
+                using (var db = new AccountRepositoryDbPostgreSQL(_connectionString, _logger))
+                {
+                    return db.dbAccounts
+                   .FirstOrDefault(item => item.No == no);
+                }
             }
-        }
+            catch (Exception e) { _logger.LogError("Error.GetAccountByNo" + e.Message); }
 
+            return null;
+        }
         public AccountDb? Add(AccountDb item)
         {
-            using var db = new AccountRepositoryDbPostgreSQL(_connectionString);
-            db.dbAccounts.Add(item);
-            db.SaveChanges();
-            //добавить обработку исключения
-            return GetByNo(item.No);
+#if DEBUG
+            _logger.LogInformation("Add");
+#endif
+            try
+            {
+                using var db = new AccountRepositoryDbPostgreSQL(_connectionString, _logger);
+                db.dbAccounts.Add(item);
+                db.SaveChanges();
+                return GetByNo(item.No);
+            }
+            catch (Exception e) { _logger.LogError("Error.Add" + e.Message); }
+
+            return null;
         }
         public AccountDb? Update(AccountDb item)
         {
-            using var db = new AccountRepositoryDbPostgreSQL(_connectionString);
-            db.dbAccounts.Update(item);
-            db.SaveChanges();
-            //добавить обработку исключения
-            return GetByNo(item.No);
+#if DEBUG
+            _logger.LogInformation("Update");
+#endif
+            try
+            {
+                using var db = new AccountRepositoryDbPostgreSQL(_connectionString, _logger);
+                db.dbAccounts.Update(item);
+                db.SaveChanges();
+                return GetByNo(item.No);
+            }
+            catch (Exception e) { _logger.LogError("Error.Update" + e.Message); }
+            return null;
         }
         public bool Remove(AccountDb item)
         {
-            using (var db = new AccountRepositoryDbPostgreSQL(_connectionString))
+#if DEBUG
+            _logger.LogInformation("Remove");
+#endif
+            try
             {
-                db.dbAccounts.Remove(item);
-                db.SaveChanges();
+                using (var db = new AccountRepositoryDbPostgreSQL(_connectionString, _logger))
+                {
+                    db.dbAccounts.Remove(item);
+                    db.SaveChanges();
+                }
+
+                return true;
             }
-            //добавить обработку исключения
-            //изменить ответ - а то всегда true
-            return true;
+            catch (Exception e) { _logger.LogError("Error.Remove" + e.Message); }
+
+            return false;
         }
     }
 }

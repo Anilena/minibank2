@@ -11,27 +11,27 @@ services:
     ports:
       - '9081:80'
         
-  #client_api:
-   # container_name: 'client_api'
-   # image: anilena2016/deploy-client_api:1.5
+  client_api:
+    container_name: 'client_api'
+    image: anilena2016/deploy-client_api:1.5
     #build:
     #  context: ../minibank_client_api
     #  dockerfile: ./Dockerfile
-    #environment:
-     # - ASPNETCORE_URLS=http://+:9082;https://+:44390;
-      #- ASPNETCORE_Kestrel__Certificates__Default__Path=/App/ssl/certs/cert.crt
-      #- ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/App/ssl/certs/cert.key
-    #volumes:
-    #  - ./logs:/App/logs
-    #  - ./minibank.crt:/App/ssl/certs/cert.crt
-    #  - ./minibank.key:/App/ssl/certs/cert.key
-    #  - ./root.crt:/App/ssl/root.crt
-    #  - ./appsettings.json:/App/appsettings.json
-    #networks:
-    #  - minibank
-    #ports:
-    #  - '9082:80'
-    #  - '44390:44390'
+    environment:
+      - ASPNETCORE_URLS=http://+:9082;https://+:44390;
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/App/ssl/certs/cert.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/App/ssl/certs/cert.key
+    volumes:
+      - c:\temp\logs:/App/logs
+      - ./cert.crt:/App/ssl/certs/cert.crt
+      - ./cert.key:/App/ssl/certs/cert.key
+      - ./root.crt:/App/ssl/root.crt
+      - ./appsettings.json:/App/appsettings.json
+    networks:
+      - minibank
+    ports:
+      - '9082:80'
+      - '44390:44390'
     #logging:
     #  driver: journald
   
