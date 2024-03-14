@@ -42,7 +42,7 @@ jobs:
 
     env:
       Solution_Name: minibank2.sln
-     Wap_Project_Directory: minibank_client_api.    
+      Wap_Project_Directory: minibank_client_api.    
       Wap_Project_Path: minibank_client_api.minibank_client_api.csproj.user.                 
 
     steps:
