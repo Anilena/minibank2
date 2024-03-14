@@ -9,7 +9,7 @@ on:
     - '**.csproj'
 
 env:
-  BACKEND_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/text-to-image-api:${{ github.sha }}
+  BACKEND_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-client_api:${{ github.sha }}
 
 jobs:
   build-backend:
