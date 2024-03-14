@@ -9,7 +9,7 @@ on:
     - '**.csproj'
 
 env:
-  DOCKER_HUB_USERNAME: 'anilena2016@gmail.com'
+  DOCKER_HUB_USERNAME: 'anilena2016'
   DOCKER_HUB_ACCESS_TOKEN: 'anilena.12345'
   BACKEND_IMAGE: anilena2016/deploy-client_api:${{ github.sha }}
 
