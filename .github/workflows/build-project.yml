@@ -49,7 +49,7 @@ jobs:
 
     # Create the app by building
     - name: Create the app
-      run: msbuild $GITHUB_REPOSITORY/minibank_client_api/minibank_client_api.csproj -t:rebuild
+      run: msbuild $env:Solution_Name /t:Restore /t:rebuild
       env:
         Appx_Bundle: Always
         Appx_Bundle_Platforms: x86|x64
