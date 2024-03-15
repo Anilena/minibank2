@@ -22,8 +22,8 @@ jobs:
     - name: Login to Dockerhub
       uses: docker/login-action@v2
       with:
-        username: $USERNAME_SECRET
-        password: 'dckr_pat_pHRdycwUUB8uusXDO310aPTBOrw'
+        username: ${{ env.USERNAME_SECRET }}
+        password:  ${{ env.PASSWOR_SECRET }}
       env:
         USERNAME_SECRET: ${{ secrets.DOCKER_HUB_USERNAME }}
         PASSWOR_SECRET: 'dckr_pat_pHRdycwUUB8uusXDO310aPTBOrw'
