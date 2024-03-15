@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "minibank_client_api", "mini
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "minibank_account_api", "minibank_account_api\minibank_account_api.csproj", "{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "minibank_web", "minibank_web\minibank_web.csproj", "{9D8E3E29-48F7-4552-9B59-F1BA5C658A43}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "minibank_web.Tests", "minibank_web.Tests\minibank_web.Tests.csproj", "{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AEC858E8-ED66-4326-B5EB-AF84A2BB4BBF}"
 	ProjectSection(SolutionItems) = preProject
 		deploy\appsettings.json = deploy\appsettings.json
@@ -43,14 +39,6 @@ Global
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D8E3E29-48F7-4552-9B59-F1BA5C658A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D8E3E29-48F7-4552-9B59-F1BA5C658A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D8E3E29-48F7-4552-9B59-F1BA5C658A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D8E3E29-48F7-4552-9B59-F1BA5C658A43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9015CE1-A67B-4E70-A9D4-A8850A2F2A35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
