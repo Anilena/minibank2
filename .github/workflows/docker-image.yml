@@ -30,7 +30,7 @@ jobs:
 
     - name : Get Path
       run: | 
-        echo "{path}" >> $GITHUB_PATH
+        echo $path
     
     #- name: Build Backend
     #  uses: docker/build-push-action@v3
