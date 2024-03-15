@@ -29,7 +29,8 @@ jobs:
       uses: docker/setup-buildx-action@v2
 
     - name : Get Path
-      run: $GITHUB_PATH
+      run: | 
+        echo "{path}" >> $GITHUB_PATH
     
     #- name: Build Backend
     #  uses: docker/build-push-action@v3
