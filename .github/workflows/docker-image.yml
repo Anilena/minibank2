@@ -9,8 +9,8 @@ on:
     #- '**.csproj'
 
 env:
-  CLIENT_IMAGE: anilena2016/deploy-client_api:${{ github.sha }}
-  ACCOUNT_IMAGE: anilena2016/deploy-account_api:${{ github.sha }}
+  CLIENT_IMAGE: anilena2016/deploy-client_api:latest
+  ACCOUNT_IMAGE: anilena2016/deploy-account_api:latest
 
 jobs:
   build-image:
