@@ -9,7 +9,8 @@ on:
     #- '**.csproj'
 
 env:
-  BACKEND_IMAGE: anilena2016/deploy-client_api:${{ github.sha }}
+  CLIENT_IMAGE: anilena2016/deploy-client_api:${{ github.sha }}
+  ACCOUNT_IMAGE: anilena2016/deploy-account_api:${{ github.sha }}
 
 jobs:
   build-image:
@@ -28,10 +29,19 @@ jobs:
     - name: Setup Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Build Backend
+    - name: Build Image Client-Api
       uses: docker/build-push-action@v3
       with:
         context: ./minibank_client_api
         file: ./minibank_client_api/Dockerfile
         push: true
-        tags: ${{ env.BACKEND_IMAGE }}
+        tags: ${{ env.CLIENT_IMAGE }}
+
+    - name: Build Image Account-Api
+      uses: docker/build-push-action@v3
+      with:
+        context: ./minibank_account_api
+        file: ./minibank_account_api/Dockerfile
+        push: true
+        tags: ${{ env.ACCOUNT_IMAGE }}
+
