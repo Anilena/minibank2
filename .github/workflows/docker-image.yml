@@ -5,10 +5,6 @@ on:
   pull_request:
     branches: [ dev ]
 
-env:
-  CLIENT_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-client_api:${{ github.sha }}
-  ACCOUNT_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-account_api:${{ github.sha }}
-
 jobs:
   build-image:
     runs-on: ubuntu-latest
@@ -35,7 +31,7 @@ jobs:
         context: ./minibank_client_api
         file: ./minibank_client_api/Dockerfile
         push: true
-        tags: ${{ env.CLIENT_IMAGE }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-client_api:${{ github.sha }}
 
     - name: Build Image Account-Api
       uses: docker/build-push-action@v3
@@ -43,5 +39,5 @@ jobs:
         context: ./minibank_account_api
         file: ./minibank_account_api/Dockerfile
         push: true
-        tags: ${{ env.ACCOUNT_IMAGE }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/deploy-account_api:${{ github.sha }}
 
