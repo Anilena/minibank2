@@ -5,17 +5,16 @@ on:
       - dev
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
-    environment: minibank
+    environment: dev
     steps:
-    - name: executing remote ssh commands using password
+    - name: executing remote ssh commands on VM
       uses: appleboy/ssh-action@master
       with:
-        host: 51.250.100.218
+        host: ${{ secrets.SSH_HOST_VM }}
         username: minibank
         key: ${{ secrets.SSH_PRIVATE_KEY_VM }}
-        #key: b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABAkMy2e0mqvP6OAu8OfgxKnAAAAEAAAAAEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIPIwlAr72qa68M1s6MLpN964L7L8U8AeQdeJFSG2c6XIAAAAoPlvdcy5lW2KIzio3ePtUQEDSoKRFdC/LD2e2DrGuBkfCQIDXp5oltvO5IQFceMTlbPbxnr3P2HydQQmMUvmAowwonEfLv5Dv0p6fgF/nNeZFI8eXGd7lt0fJQ2zDsNgbsXimeyOU7rbKoUTI+EniGpIyHpAEeP3h4kFK1kg0F0LjGWeJ3j9mtt4UUMJubxY8U9TC/SXmrx2ZlixaxsqH2s=
         passphrase: anilena
         script: |
                     cd /opt/
