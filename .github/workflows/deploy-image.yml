@@ -7,6 +7,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    environment: minibank
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
