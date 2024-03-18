@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement.Mvc;
+using minibank_account_api.Helpers;
 using minibank_account_api.Models;
 
 namespace minibank_account_api.Controllers
@@ -19,7 +21,7 @@ namespace minibank_account_api.Controllers
             _connectionString = _config.GetConnectionString("SQLConnection");
         }
 
-
+        [FeatureGate(FeatureFlags.GetByUserGuid)]
         [HttpGet("by-user/{userId}")]
         [Produces("application/json")]
         public IEnumerable<Account> GetByUserGuid([FromRoute] Guid userId)
@@ -41,6 +43,7 @@ namespace minibank_account_api.Controllers
             return accounts;
         }
 
+        [FeatureGate(FeatureFlags.GetByNo)]
         [HttpGet("{no}")]
         [Produces("application/json")]
         public Account? GetByNo([FromRoute] string no)
@@ -56,6 +59,7 @@ namespace minibank_account_api.Controllers
             return null;
         }
 
+        [FeatureGate(FeatureFlags.Set)]
         [HttpPut]
         [ProducesResponseType(200)]
         [Produces("application/json")]
@@ -77,6 +81,7 @@ namespace minibank_account_api.Controllers
             return null;
         }
 
+        [FeatureGate(FeatureFlags.Delete)]
         [HttpDelete("{no}")]
         [ProducesResponseType(200)]
         public bool Delete([FromRoute] string no)

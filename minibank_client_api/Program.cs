@@ -1,3 +1,4 @@
+using Microsoft.FeatureManagement;
 using minibank_client_api.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +12,12 @@ builder.Logging.AddFileLogger(config =>
 builder.Services.Configure<ConsoleLifetimeOptions>
     (options => options.SuppressStatusMessages = true);
 
+builder.Services.AddFeatureManagement().UseDisabledFeaturesHandler(new RedirectDisabledFeatureHandler());
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

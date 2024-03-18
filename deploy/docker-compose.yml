@@ -19,7 +19,7 @@ services:
       #- ./cert.crt:/App/ssl/certs/cert.crt
       #- ./cert.key:/App/ssl/certs/cert.key
       - ./root.crt:/App/ssl/root.crt
-      - ./appsettings.json:/App/appsettings.json
+      - ./appsettings_account.json:/App/appsettings.json
     networks:
       - minibank
     ports:
@@ -44,7 +44,7 @@ services:
       #- ./cert.crt:/App/ssl/certs/cert.crt
       #- ./cert.key:/App/ssl/certs/cert.key
       - ./root.crt:/App/ssl/root.crt
-      - ./appsettings.json:/App/appsettings.json
+      - ./appsettings_client.json:/App/appsettings.json
     networks:
       - minibank
     ports:

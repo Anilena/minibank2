@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement.Mvc;
+using minibank_client_api.Helpers;
 using minibank_client_api.Models;
 
 namespace minibank_client_api.Controllers
@@ -18,6 +20,7 @@ namespace minibank_client_api.Controllers
             _connectionString = _config.GetConnectionString("SQLConnection");
         }
 
+        [FeatureGate(FeatureFlags.GetByUserName)]
         [HttpGet("{username}")]
         [Produces("application/json")]
         public Client? GetByUserName([FromRoute]String username)
@@ -35,6 +38,7 @@ namespace minibank_client_api.Controllers
             return null;
         }
 
+        [FeatureGate(FeatureFlags.Set)]
         [HttpPut]
         [ProducesResponseType(200)]
         [Produces("application/json")]
@@ -59,6 +63,7 @@ namespace minibank_client_api.Controllers
             return null;
         }
 
+        [FeatureGate(FeatureFlags.Delete)]
         [HttpDelete("{username}")]
         [ProducesResponseType(200)]
         public bool Delete([FromRoute] string username)
