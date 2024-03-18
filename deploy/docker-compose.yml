@@ -3,7 +3,7 @@ version: "3.2"
 services:
   account_api:
     container_name: 'account_api'
-    image: anilena2016/deploy-account_api:1.6
+    image: anilena2016/deploy-account_api:latest
     #build:
     #  context: ../minibank_account_api
     #  dockerfile: ./Dockerfile
@@ -28,7 +28,7 @@ services:
         
   client_api:
     container_name: 'client_api'
-    image: anilena2016/deploy-client_api:1.6
+    image: anilena2016/deploy-client_api:latest
     #build:
     #  context: ../minibank_client_api
     #  dockerfile: ./Dockerfile
