@@ -106,5 +106,7 @@ jobs:
         script: |
                     cd /opt/minibank
                     docker-compose down
+                    docker pull docker.io/anilena2016/deploy-client_api:latest
+                    docker pull docker.io/anilena2016/deploy-account_api:latest
                     docker-compose up -d
      
