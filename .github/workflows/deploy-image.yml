@@ -19,4 +19,5 @@ jobs:
         passphrase: anilena
         script: |
                     cd /opt/minibank
+                    docker-compose down
                     docker-compose up -d
