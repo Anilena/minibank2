@@ -14,7 +14,7 @@ jobs:
         host: 51.250.100.218
         username: minibank
         #key_path: ${{ github.workspace }}/deploy/pkey.ppk
-        key: ${{ secrets.SSH_PRIVATE_KEY_VM}}
+        key: b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABAkMy2e0mqvP6OAu8OfgxKnAAAAEAAAAAEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIPIwlAr72qa68M1s6MLpN964L7L8U8AeQdeJFSG2c6XIAAAAoPlvdcy5lW2KIzio3ePtUQEDSoKRFdC/LD2e2DrGuBkfCQIDXp5oltvO5IQFceMTlbPbxnr3P2HydQQmMUvmAowwonEfLv5Dv0p6fgF/nNeZFI8eXGd7lt0fJQ2zDsNgbsXimeyOU7rbKoUTI+EniGpIyHpAEeP3h4kFK1kg0F0LjGWeJ3j9mtt4UUMJubxY8U9TC/SXmrx2ZlixaxsqH2s=
         passphrase: anilena
         script: |
                     cd /opt/
