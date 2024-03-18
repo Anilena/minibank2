@@ -20,6 +20,8 @@ jobs:
         script: |
                     cd /opt/minibank
                     docker-compose down
+                    git fetch minibank2
+                    cp /opt/minibank/minibank2/deploy/*.* /opt/minibank/
                     docker pull docker.io/anilena2016/deploy-client_api:latest
                     docker pull docker.io/anilena2016/deploy-account_api:latest
                     docker-compose up -d
