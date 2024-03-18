@@ -1,25 +1,21 @@
-name: .NET Core
+name: Buid .NET Core
 
 on:
   push:
-    branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Release]
 
     runs-on: windows-latest  
-
+    environment: dev
+    
     env:
       Solution_Name: minibank2.sln
-      Wap_Project_Directory: minibank_client_api.    
-      Wap_Project_Path: minibank_client_api.minibank_client_api.csproj.user.                 
 
     steps:
     - name: Checkout
