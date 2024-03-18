@@ -1,4 +1,4 @@
-name: Remote deploy
+name: Deploy Images on Remote VM
 on:
   push:
     branches:
