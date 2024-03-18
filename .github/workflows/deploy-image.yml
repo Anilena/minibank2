@@ -20,6 +20,7 @@ jobs:
         script: |
                     cd /opt/minibank
                     docker-compose down
+                    rm -Rfv /opt/minibank/minibank2
                     git clone https://github.com/Anilena/minibank2
                     cp /opt/minibank/minibank2/deploy/*.* /opt/minibank/
                     docker pull docker.io/anilena2016/deploy-client_api:latest
