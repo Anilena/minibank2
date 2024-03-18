@@ -8,6 +8,9 @@ builder.Logging.AddFileLogger(config =>
     config.FilePath = builder.Configuration.GetSection("Logging").GetSection("File").GetSection("Options").GetSection("FilePath").Value ?? "";
 });
 
+builder.Services.Configure<ConsoleLifetimeOptions>
+    (options => options.SuppressStatusMessages = true);
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
