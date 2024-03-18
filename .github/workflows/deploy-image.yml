@@ -18,4 +18,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY_VM }}
         passphrase: anilena
         script: |
-                    cd /opt/
+                    docker pull docker.io/anilena2016/deploy-acount_api:lastes
+                    docker pull docker.io/anilena2016/deploy-client_api:lastes
+                    cd /opt/minibank
+                    docker-compose down
+                    docker-compose up -d
