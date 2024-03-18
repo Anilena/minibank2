@@ -13,7 +13,7 @@ jobs:
       with:
         host: 51.250.97.170
         username: minibank
-        password: anilena.12345
         key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4cWHOAI4T+qsP2VkWq0pGYQFCazzleMelD2Hiz8bCbQENHS4ASRAgbMpoEKi2lpXfLs9dEwG5hxFQpFCXGwxDhL1z+u9KQh0BPUshlM3INUAWMZmGy3MTY50nNIVv9D7nnRSP24sX9rPmGzVu5+ngKF3Teut69mVjpXqn1jpnDSpkLgCXL9Oj26it7FkL1tIzgwpKmjvCeJGzzp/ClcjvLwuRZbLGz4TU/i6Ey6gmjfDRYPB7+88CCPK581nwiK98ICgdQFkEEBUnkr5Ri2hJOSrchHPryMBFIWLezvKEoruujzXTqHnW88ZOBPJgKWo/vI8dh3O3Poorm8wA80+Z rsa-key-20240309'
+        passphrase: anilena
         script: |
                     cd /opt/minibank
