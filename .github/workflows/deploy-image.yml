@@ -11,7 +11,7 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
-        host: 51.250.97.170
+        host: 51.250.100.218
         username: minibank
         #key_path: ${{ github.workspace }}/deploy/pkey.ppk
         key: ${{ secrets.SSH_PRIVATE_KEY_VM}}
