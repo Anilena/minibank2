@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AEC858E8-ED66-4326-B5EB-AF84A2BB4BBF}"
 	ProjectSection(SolutionItems) = preProject
 		deploy\appsettings.json = deploy\appsettings.json
+		deploy\appsettings_account.json = deploy\appsettings_account.json
+		deploy\appsettings_client.json = deploy\appsettings_client.json
 		deploy\cert.crt = deploy\cert.crt
 		deploy\cert.key = deploy\cert.key
 		deploy\cert.pfx = deploy\cert.pfx
