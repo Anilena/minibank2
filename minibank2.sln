@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AEC858
 		deploy\root.crt = deploy\root.crt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "minibank_test", "minibank_test\minibank_test.csproj", "{986A6385-7159-43A1-9442-77E1EC297194}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2591F1FC-7AA0-4497-B062-4F4F8B91AD3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986A6385-7159-43A1-9442-77E1EC297194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986A6385-7159-43A1-9442-77E1EC297194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986A6385-7159-43A1-9442-77E1EC297194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986A6385-7159-43A1-9442-77E1EC297194}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
